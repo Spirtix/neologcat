@@ -1,22 +1,23 @@
 #include "utils.h"
 
-int utils::getColorCode(std::string s) {
-    if (s == "D") {
-        return 95;
+int utils::getColorCode(char c) {
+    int msgType = stringToMsgType(c);
+    switch (msgType) {
+        case VERBOSE:
+            return 94;
+        case DEBUG:
+            return 95;
+        case INFO:
+            return 94;
+        case WARNING:
+            return 93;
+        case ERROR:
+            return 91;
+        case FATAL:
+            return 31;
+        default:
+            return -1;
     }
-    else if (s == "W") {
-        return 93;
-    }
-    else if (s == "E") {
-        return 91;
-    }
-    else if (s == "F") {
-        return 31;
-    }
-    else if (s == "I") {
-        return 94;
-    }
-    return -1;
 }
 
 std::vector<std::string> utils::split(const std::string& str, const std::string& delim) {
@@ -31,4 +32,24 @@ std::vector<std::string> utils::split(const std::string& str, const std::string&
         prev = pos + delim.length();
     } while (pos < str.length() && prev < str.length());
     return tokens;
+}
+
+int utils::stringToMsgType(char c) {
+    c = toupper(c);
+    switch (c) {
+        case 'V':
+            return VERBOSE;
+        case 'D':
+            return DEBUG;
+        case 'I':
+            return INFO;
+        case 'W':
+            return WARNING;
+        case 'E':
+            return ERROR;
+        case 'F':
+            return FATAL;
+        default:
+            return -1;
+    }
 }
